@@ -19,7 +19,7 @@ app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
-app.get('/costumPattern', pattern.getCostumPattern);
+app.post('/findPattern', pattern.findPattern);
 
 app.get('/pattern', pattern.getAllPattern);
 app.post('/pattern', pattern.createPattern);

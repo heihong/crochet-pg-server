@@ -1,4 +1,4 @@
-const { onSeletAllTodo, onCreateTodo, onUpdateTodo, onDeleteTodo, onfindTodo } = require("./services")
+const { onSeletAllTodo, onCreateTodo, onUpdateTodo, onDeleteTodo, onFindTodo } = require("./services")
 
 
 const getAllTodo = (request, response) => {
@@ -27,7 +27,7 @@ const deleteTodo = (request, response) => {
 
   
 const findTodo = (request, response) => {
-    onfindTodo(request).then(data =>{
+    onFindTodo(request).then(data =>{
         response.status(200).json(data)
     })
 }

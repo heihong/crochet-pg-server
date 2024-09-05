@@ -1,13 +1,12 @@
-const { onSeletAllPattern, onSeletAllChapter, onSeletAllTodo, onCreatePattern, onUpdatePattern ,onDeletePattern } = require("./services");
+const { onSeletAllPattern, onSeletAllChapter, onSeletAllTodo, onCreatePattern, onUpdatePattern ,onDeletePattern, onFindPattern } = require("./services");
 
-const getCostumPattern = (request, response) => {
-    Promise.all([onSeletAllPattern(), onSeletAllChapter(), onSeletAllTodo()]).then((values) => {
+const findPattern = (request, response) => {
+    Promise.all([onFindPattern(request), onSeletAllChapter(), onSeletAllTodo()]).then((values) => {
       let result = [];
       let patternPromise = values[0];
       let chapterPromise = values[1];
       let todosPromise = values[2];
-  
-     
+      
       for(let k =0; k< patternPromise.length; k++){
         let chapter = [];
         for(let i =0; i< patternPromise[k].chapter.length; i++){
@@ -57,7 +56,7 @@ const deletePattern = (request, response) => {
 }
 
 module.exports = {
-  getCostumPattern,
+  findPattern,
   getAllPattern,
   createPattern,
   updatePattern,

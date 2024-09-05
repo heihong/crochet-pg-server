@@ -32,6 +32,19 @@ const onCreatePattern = (request, response) => {
   });
 }
 
+const onFindPattern = (request, response) => {
+  const { title } = request.body
+  return new Promise((resolve, reject)=>{
+    pool.query('SELECT * FROM pattern WHERE title=$1', [title],  (error, results)=>{
+        if(error){
+            return reject(error);
+        }
+        return resolve(results.rows);
+      });
+  });
+}
+
+
 const onUpdatePattern = (request, response) => {
   const id = parseInt(request.params.id)
   const { title, chapter } = request.body
@@ -170,7 +183,7 @@ const onDeleteTodo = (request, response) => {
 }
 
 
-const onfindTodo = (request, response) => {
+const onFindTodo = (request, response) => {
   const {search} = request.body
 
   return new Promise((resolve, reject)=>{
@@ -189,6 +202,7 @@ module.exports = {
   onCreatePattern,
   onUpdatePattern,
   onDeletePattern,
+  onFindPattern,
   onSeletAllChapter,
   onCreateChapter,
   onUpdateChapter,
@@ -197,5 +211,5 @@ module.exports = {
   onCreateTodo,
   onUpdateTodo,
   onDeleteTodo,
-  onfindTodo
+  onFindTodo
 }
