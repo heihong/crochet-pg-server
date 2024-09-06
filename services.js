@@ -128,9 +128,22 @@ const onDeleteChapter = (request, response) => {
   });
 }
 
-const onSeletAllTodo = () =>{
+const onSeletAllTodo = (request, response) =>{
   return new Promise((resolve, reject)=>{
     pool.query('SELECT * FROM todos ORDER BY id ASC',  (error, results)=>{
+        if(error){
+            return reject(error);
+        }
+        return resolve(results.rows);
+      });
+  });
+}
+
+const onSeletedTodoByLimit = (request, response) =>{
+  const { limit } = request.body
+
+  return new Promise((resolve, reject)=>{
+    pool.query('SELECT * FROM todos LIMIT $1', [limit],  (error, results)=>{
         if(error){
             return reject(error);
         }
@@ -142,11 +155,11 @@ const onSeletAllTodo = () =>{
 const onCreateTodo = (request, response) => {
   const { action, number } = request.body
   return new Promise((resolve, reject)=>{
-    pool.query('INSERT INTO todos (action, number) VALUES ($1, $2)', [action, number],  (error, results)=>{
+    pool.query('INSERT INTO todos (action, number) VALUES ($1, $2) RETURNING *', [action, number],  (error, results)=>{
         if(error){
             return reject(error);
         }
-        return resolve(results.insertId);
+        return resolve(results.rows[0].id);
       });
   });
 }
@@ -211,5 +224,6 @@ module.exports = {
   onCreateTodo,
   onUpdateTodo,
   onDeleteTodo,
-  onFindTodo
+  onFindTodo,
+  onSeletedTodoByLimit
 }

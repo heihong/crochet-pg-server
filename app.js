@@ -32,6 +32,7 @@ app.put('/chapter/:id', chapter.updateChapter)
 app.delete('/chapter/:id', chapter.deleteChapter)
 
 app.get('/todos', todo.getAllTodo);
+app.post('/todosByLimit', todo.getTodoByLimit);
 app.post('/todos', todo.createTodo);
 app.put('/todos/:id', todo.updateTodo)
 app.delete('/todos/:id', todo.deleteTodo)

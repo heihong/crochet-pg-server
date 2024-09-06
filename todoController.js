@@ -1,4 +1,4 @@
-const { onSeletAllTodo, onCreateTodo, onUpdateTodo, onDeleteTodo, onFindTodo } = require("./services")
+const { onSeletAllTodo, onCreateTodo, onUpdateTodo, onDeleteTodo, onFindTodo, onSeletedTodoByLimit } = require("./services")
 
 
 const getAllTodo = (request, response) => {
@@ -31,9 +31,16 @@ const findTodo = (request, response) => {
         response.status(200).json(data)
     })
 }
+
+const getTodoByLimit = (request, response) => {
+    onSeletedTodoByLimit(request).then(data =>{
+        response.status(200).json(data)
+    })
+}
   
 
 module.exports = {
+    getTodoByLimit,
     getAllTodo,
     createTodo,
     updateTodo,
