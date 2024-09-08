@@ -1,4 +1,4 @@
-const { onSeletAllChapter, onCreateChapter, onUpdateChapter, onDeleteChapter } = require("./services")
+const { onSeletAllChapter, onCreateChapter, onUpdateChapter, onDeleteChapter } = require("../pattern/patternService")
 
 const getAllChapter = (request, response) => {
     onSeletAllChapter().then(data =>{
