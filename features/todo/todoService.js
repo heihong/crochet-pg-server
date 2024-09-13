@@ -31,12 +31,12 @@ class TodoService {
     };
 
     onCreateTodo (req) {
-        const { action, number } = req.body;
+        const { action, nbstitch} = req.body;
         return new Promise((resolve, reject)=>{
             connectionPool.connect((err, db) => {
                 if (err) reject(err);
-                let query = format('INSERT INTO todos (action, number) VALUES ($1, $2) RETURNING *'); // get inputs from req
-                db.query(query, [action, number],(err, result) => {
+                let query = format('INSERT INTO todos (action, nbstitch) VALUES ($1, $2) RETURNING *'); // get inputs from req
+                db.query(query, [action, nbstitch],(err, result) => {
                     if (err) reject(err);
                     resolve(result.rows[0].id);
                 })
@@ -46,13 +46,12 @@ class TodoService {
 
     onUpdateTodo (req) {
         const id = parseInt(req.params.id);
-        const { action, number } = req.body;
-      
+        const { action, nbstitch } = req.body;
         return new Promise((resolve, reject)=>{
             connectionPool.connect((err, db) => {
                 if (err) reject(err);
-                let query = format('UPDATE todos SET action = $1, number = $2 WHERE id = $3'); // get inputs from req
-                db.query(query, [action, number, id],(err, result) => {
+                let query = format('UPDATE todos SET action = $1, nbstitch = $2 WHERE id = $3'); // get inputs from req
+                db.query(query, [action, nbstitch, id],(err, result) => {
                     if (err) reject(err);
                     resolve(id);
                 })
@@ -75,12 +74,12 @@ class TodoService {
     };
 
     onFindTodo (req) {
-        const {search} = req.body
+        const {action, nbstitch} = req.body
         return new Promise((resolve, reject)=>{
             connectionPool.connect((err, db) => {
                 if (err) reject(err);
                 let query = format(`SELECT * FROM todos WHERE action LIKE '%'||$1||'%'`); // get inputs from req
-                db.query(query, [search],(err, result) => {
+                db.query(query, [action],(err, result) => {
                     if (err) reject(err);
                     resolve(result.rows);
                 })

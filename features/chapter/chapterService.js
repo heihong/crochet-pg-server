@@ -15,8 +15,8 @@ class ChapterService {
         });
     }
   
-  conCreateChapter (request, response) {
-    const { title, todos } = request.body
+  onCreateChapter (request, response) {
+    const { title, todos } = request
     return new Promise((resolve, reject)=>{
         connectionPool.connect((err, db) => {
             if (err) reject(err);

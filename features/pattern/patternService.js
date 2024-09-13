@@ -16,7 +16,7 @@ class PatternService {
   };
 
   onCreatePattern = (request, response) => {
-    const { title, chapter } = request.body
+    const { title, chapter } = request
     return new Promise((resolve, reject)=>{
       connectionPool.connect((err, db) => {
           if (err) reject(err);

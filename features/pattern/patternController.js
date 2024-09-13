@@ -14,6 +14,7 @@ const findPattern = (request, response) => {
         let chapterPromise = values[1];
         let todosPromise = values[2];
         for(let k =0; k< patternPromise.length; k++){
+          console.log(patternPromise)
           let chapter = [];
           for(let i =0; i< patternPromise[k].chapter.length; i++){
             let todo = [];
@@ -50,13 +51,32 @@ const getAllPattern = (request, response) => {
 
 
 const createPattern =(request, response) => {
-  patternService.onCreatePattern(request)
+  patternService.onCreatePattern(request.body)
     .then(insertId =>{
       response.status(201).send(`Pattern added with ID: ${insertId}`)
     })
     .catch((error) => { 
       response.status(400).send({ message: error.message }) 
   })
+}
+
+const sendPattern =(request, response) => {
+ const {chapter, title} = request.body;
+ const promiseArray = []
+ let pattern = {title, chapter: []}
+ for(let i=0; i< chapter.length; i++){
+  promiseArray.push(chapterService.onCreateChapter(chapter[i]));
+ }
+  Promise.all(promiseArray).then((data)=> {
+    pattern.chapter = data;
+    patternService.onCreatePattern(pattern)
+    .then(insertId =>{
+      response.status(201).send(`Pattern added with ID: ${insertId}`)
+    })
+    .catch((error) => { 
+      response.status(400).send({ message: error.message }) 
+    })
+  });
 }
 
 const updatePattern = (request, response) => {
@@ -83,6 +103,7 @@ module.exports = {
   findPattern,
   getAllPattern,
   createPattern,
+  sendPattern,
   updatePattern,
   deletePattern
 }

@@ -15,7 +15,7 @@ const getAllTodo = (request, response) => {
 const createTodo =(request, response) => {
     todoService.onCreateTodo(request)
         .then(insertId =>{
-            response.status(201).send(`Todo added with ID: ${insertId}`)
+            response.status(200).send(`Todo added with ID: ${insertId}`)
         })
         .catch((error) => { 
             response.status(400).send({ message: error.message }) 
